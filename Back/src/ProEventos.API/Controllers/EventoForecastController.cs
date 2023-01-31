@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProEventos.API.Data;
 using ProEventos.API.Models;
 
 namespace ProEventos.API.Controllers;
@@ -7,20 +9,30 @@ namespace ProEventos.API.Controllers;
 [Route("api/[controller]")]
 public class EventoController : ControllerBase
 {
-    public EventoController()
+    private readonly DataContext _context;
+    public EventoController(DataContext context)
     {
+        _context = context;
     }
+
     [HttpGet]
-    public Evento Get()
+    [ProducesResponseType(typeof(IEnumerable<Evento>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<Evento>>> Get()
     {
-        return new Evento(){
-            EventoId = 1,
-            Tema = "Curso de Angular",
-            Local = "Belo Horizonte",
-            Lote = "1°",
-            QtdPessoas = 250,
-            DataEvento = DateTime.Now.ToString(),
-            ImageURL="img.png"
-        };
+        return await _context.Eventos.ToListAsync();
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Evento), StatusCodes.Status200OK)]
+    public async Task<ActionResult<Evento>> Get(int id)
+    {
+        var retorno = await _context.Eventos.FirstOrDefaultAsync(e => e.EventoId == id);
+
+        if (retorno is null)
+        {
+            return NotFound();
+        }
+        return Ok(retorno);
     }
 }
