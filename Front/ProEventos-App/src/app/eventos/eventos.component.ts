@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class EventosComponent {
 
+  public eventos:any=[
+    {Nome:"Evento A", Tema:"A"},
+    {Nome:"Evento B", Tema:"B"},
+    {Nome:"Evento C", Tema:"C"},
+  ];
+
 }
