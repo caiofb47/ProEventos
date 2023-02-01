@@ -1,16 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
-  styleUrls: ['./eventos.component.scss']
+  styleUrls: ['./eventos.component.scss'],
 })
 export class EventosComponent {
+  constructor(private http: HttpClient) {}
 
-  public eventos:any=[
-    {Nome:"Evento A", Tema:"A"},
-    {Nome:"Evento B", Tema:"B"},
-    {Nome:"Evento C", Tema:"C"},
-  ];
+  public eventos: any;
 
+  ngOnInit(): void {
+    this.getEventos();
+  }
+
+  public getEventos(): void {
+    this.http.get('http://localhost:5074/api/evento').subscribe(
+      response => this.eventos = response,
+      error => console.log(error),
+    );
+  }
 }
