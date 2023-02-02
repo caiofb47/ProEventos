@@ -1,7 +1,28 @@
 
+<form action="" class="form-inline">
+  <div class="form-group mb-2">
+<input type="text" class="form-control mr-2" placeholder="Buscar">
+<button class="btn btn-outline-success">Buscar</button>
+  </div>
+</form>
 
 
-<div *ngFor="let item of eventos">
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Local</th>
+    <th>Data</th>
+    <th>Tema</th>
+    <th>Qtd Pessoas</th>
+    <th>Lote</th>
+    <th>Opções</th>
+  </tr>
+</thead>
+</table>
+
+
+<!-- <div *ngFor="let item of eventos">
   <p>{{item.eventoId}}</p>
   <p>{{item.local}}</p>
   <p>{{item.dataEvento}}</p>
@@ -10,4 +31,6 @@
   <p>{{item.lote}}</p>
   <p>{{item.imageURL}}</p>
   <hr/>
-</div>
+</div> -->
+
+
