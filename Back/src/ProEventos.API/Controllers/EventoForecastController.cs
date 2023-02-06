@@ -35,4 +35,44 @@ public class EventoController : ControllerBase
         }
         return Ok(retorno);
     }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Evento), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Post(Evento evento)
+    {
+        if (evento is null)
+        {
+            return NotFound();
+        }
+        _context.Eventos.Add(evento);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> Put(Evento evento)
+    {
+        if (evento is null)
+        {
+            return NotFound();
+        }
+        _context.Update(evento);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult> Delete(int id)
+    {
+        Evento? evento = await _context.Eventos.FirstOrDefaultAsync(e => e.EventoId == id);
+        if (evento is null)
+        {
+            return NotFound();
+        }
+        _context.Eventos.Remove(evento);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
 }
